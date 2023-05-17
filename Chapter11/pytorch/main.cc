@@ -4,6 +4,7 @@
 #include "rnn.h"
 #include "vocabulary.h"
 
+#include <ATen/ATen.h>
 #include <experimental/filesystem>
 #include <iostream>
 
@@ -91,7 +92,7 @@ void TrainModel(
     // Compute a loss value to estimate error of our model
     // target should have size of [batch_size]
     torch::Tensor loss = torch::binary_cross_entropy_with_logits(
-        prediction, labels, {}, {}, Reduction::Mean);
+        prediction, labels, {}, {}, at::Reduction::Mean);
 
     // Compute gradients of the loss and parameters of our model
     loss.backward();
